@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addContact, loadContacts } from "../actions/contacts";
+import { CustomInput } from "./CustomInput";
 
 
 
@@ -32,24 +33,31 @@ export const PhoneBook = () => {
               autoComplete="off"
               onSubmit={handleSubmit(onSubmit)}
               >
+                  <CustomInput
+                    register={register}
+                    label="First Name"
+                    name="firstName"
+                    errors={errors}
+                    errLabel="First name is required. "
+                  />
+                  <CustomInput
+                    register={register}
+                    label="Last Name"
+                    name="lastName"
+                    errors={errors}
+                    errLabel="Last name is required. "
+                  />
+                  <CustomInput
+                    register={register}
+                    label="Phone Number"
+                    name="phone"
+                    errors={errors}
+                    errLabel="Phone number is required. "
+                    type="number"
+                  />
+              
 
-              <label className="form-label">First Name</label>
-                <input className="form-control"  {...register('firstName', { required: true })} />
-                    {
-                        errors.firstName?.type === 'required' 
-                        &&  <small className="text-danger ">First name is required.</small>
-                    }
-              <label className="form-label" >Last Name</label>
-                <input className="form-control" {...register('lastName' , { required: true })} />
-                    {errors.lastName?.type === 'required' 
-                    && <small className="text-danger ">Last Name is required.</small>}
-              <label className="form-label" >Phone</label>
-
-                <input className="form-control " {...register('phone', { required: true })} />
-                    {errors.phone?.type === 'required' 
-                    && <small className="text-danger ">Phone is required.</small>}
-
-              <button className="self-end btn btn-primary" >
+              <button className="btn btn-primary" >
                   Submit
               </button>
 
@@ -60,3 +68,5 @@ export const PhoneBook = () => {
       );
   }
   
+
+
