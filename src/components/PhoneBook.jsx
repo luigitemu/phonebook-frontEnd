@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addContact, loadContacts } from "../actions/contacts";
-import { PhoneList } from "./PhoneList";
+
 
 
 
@@ -55,7 +55,7 @@ export const PhoneBook = () => {
 
 
           </form>
-          <PhoneList />
+          
         </>
       );
   }
