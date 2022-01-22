@@ -47,8 +47,7 @@ export const PhoneList = () => {
     ];
     //Actions to rows 
     const handleUpdate = (data  ) => {
-      console.log(data);
-      dispatch(setActiveContact(data ));
+      dispatch(setActiveContact(data));
       dispatch(openModal())
       // setModalIsOpen(true);
     };

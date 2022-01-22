@@ -112,7 +112,8 @@ export const startUpdatingContact = (contact , id) => {
         const resp = await fetchWithoutToken(`contacts/${id}` , contact , 'PUT');
         const body = await resp.json();
         if(resp.ok){
-            dispatch(updateContact( body.contact ));
+            // console.log(body.contact );
+            dispatch(updateContact( contact ));
             Swal.fire({
                 icon: 'success',
                 position:'center',
@@ -120,7 +121,7 @@ export const startUpdatingContact = (contact , id) => {
                 showConfirmButton: false,
                 timer: 1500
               });
-            
+            dispatch(resetActiveContact())
             dispatch(closeModal())
             
         }else{
@@ -151,6 +152,7 @@ export const setActiveContact  =  (contact) =>({ type: types.contactsSetActive ,
 
 
     
+export const resetActiveContact = ()=>({type: types.contactsResetActive}) 
 const loadContacts = (data)=>({type: types.contactsLoad , payload: data});
 const addContact = (contact)=>({type: types.contactsAdd , payload: contact });
 const updateContact = (contact) => ({ type: types.contactsUpdate , payload: contact});

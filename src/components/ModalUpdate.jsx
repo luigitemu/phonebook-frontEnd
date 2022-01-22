@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { closeModal } from '../actions/ui';
-import { CustomInput } from './CustomInput';
 import {startUpdatingContact} from '../actions/contacts'
 
 export const ModalUpdate = () => {
@@ -11,12 +10,13 @@ export const ModalUpdate = () => {
   const {modalOpen } = useSelector( state => state.ui);
   const {activeContact } = useSelector( state => state.contacts);
   const dispatch = useDispatch()
-  const {register,  formState: { errors },reset , handleSubmit} = useForm();
+  const {register, reset ,formState: { errors } , handleSubmit} = useForm();
   Modal.setAppElement('#root');
   
+  const [values, setValues] = useState(activeContact);
   const close = ()=>  {
 
-    dispatch(closeModal())
+    dispatch(closeModal());
       
   }
   const customStyles = {
@@ -34,7 +34,8 @@ export const ModalUpdate = () => {
 
   
 const onSubmit = (data) => {
-  dispatch(startUpdatingContact(data ,data.id ))
+  dispatch(startUpdatingContact(data ,data.id ));
+  reset()
 };
 
   
@@ -65,31 +66,24 @@ const onSubmit = (data) => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <input type="text" defaultValue={activeContact?._id} {...register('id', { required: true })} hidden />
-                <CustomInput
-                    register={register}
-                    label="First Name"
-                    name="firstName"
-                    errors={errors}
-                    errLabel="First name is required. "
-                    defaultValue={activeContact?.firstName }
-                  />
-                   <CustomInput
-                    register={register}
-                    label="Last Name"
-                    name="lastName"
-                    errors={errors}
-                    errLabel="Last name is required. "
-                    defaultValue={activeContact?.lastName}
-                  />
-                  <CustomInput
-                    register={register}
-                    label="Phone Number"
-                    name="phone"
-                    errors={errors}
-                    errLabel="Phone number is required. "
-                    type="number"
-                    defaultValue={activeContact?.phone }
-                  />
+                <label className='form-label'>First Name </label>
+                <input className='form-control' placeholder={activeContact?.firstName} {...register('firstName' , {required:true }) }    />  
+                {
+                    errors.firstName?.type === 'required' 
+                    && <div><small className="text-danger ">First Name is required </small></div>
+                }  
+                <label className='form-label'>Last  Name </label>
+                <input className='form-control' placeholder={activeContact?.lastName} {...register('lastName' , {required:true }) }    />  
+                {
+                    errors.lastName?.type === 'required' 
+                    && <div> <small className="text-danger ">Last Name is required</small></div>
+                }  
+                <label className='form-label'>Phone  </label>
+                <input type="number" className='form-control' placeholder={activeContact?.phone} {...register('phone' , {required:true }) }    />  
+                {
+                    errors.phone?.type === 'required' 
+                    && <div> <small className="text-danger ">Phone is Required</small></div>
+                }  
                 <div className="d-grid gap-2">
               <button className="btn btn-primary block" >
                   Submit

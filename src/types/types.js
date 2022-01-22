@@ -4,6 +4,7 @@ export const types = {
     contactsUpdate: '[contacts] Update a contact',
     contactsDelete: '[contacts] Delete a contact',
     contactsSetActive: '[contacts] Set Active a contact',
+    contactsResetActive: '[contacts] Reset active  contact',
 
 
     uiOpenModal:    '[ui] Open modal',

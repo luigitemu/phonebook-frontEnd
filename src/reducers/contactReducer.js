@@ -14,6 +14,11 @@ export const contactReducer = ( state= initialState , action )=>{
                 ...state,
                 activeContact: {...action.payload} 
             }
+        case types.contactsResetActive:
+            return {
+                ...state,
+                activeContact: null  
+            }
         case types.contactsLoad:
             return {
                 ...state,
