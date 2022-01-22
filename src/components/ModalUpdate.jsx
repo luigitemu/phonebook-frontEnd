@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { closeModal } from '../actions/ui';
 import {startUpdatingContact} from '../actions/contacts'
+import { useForm } from '../hooks/useForm';
 
 export const ModalUpdate = () => {
-
+  
+  const dispatch = useDispatch();
   const {modalOpen } = useSelector( state => state.ui);
   const {activeContact } = useSelector( state => state.contacts);
-  const dispatch = useDispatch()
-  const {register, reset ,formState: { errors } , handleSubmit} = useForm();
   Modal.setAppElement('#root');
   
-  const [values, setValues] = useState(activeContact);
-  const close = ()=>  {
 
+  const [values , handleChange , reset  ] = useForm();
+  
+
+  const close = ()=>  {
     dispatch(closeModal());
-      
   }
   const customStyles = {
     content: {
@@ -34,8 +34,22 @@ export const ModalUpdate = () => {
 
   
 const onSubmit = (data) => {
-  dispatch(startUpdatingContact(data ,data.id ));
-  reset()
+  // dispatch(startUpdatingContact(data ,data.id ));
+  // reset()
+};
+const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(activeContact);
+    const updateData = {
+      firstName:e.target[1].value,
+      lastName: e.target[2].value,
+      phone : e.target[3].value 
+    }
+    console.log(updateData);
+    dispatch(startUpdatingContact(updateData ,activeContact._id ));
+  
+
 };
 
   
@@ -62,28 +76,37 @@ const onSubmit = (data) => {
             </div>
         <form 
           className="form-edit" 
-         
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit}
         >
-          <input type="text" defaultValue={activeContact?._id} {...register('id', { required: true })} hidden />
+          <input type="text" defaultValue={activeContact?._id}  hidden />
                 <label className='form-label'>First Name </label>
-                <input className='form-control' placeholder={activeContact?.firstName} {...register('firstName' , {required:true }) }    />  
-                {
-                    errors.firstName?.type === 'required' 
-                    && <div><small className="text-danger ">First Name is required </small></div>
-                }  
+                <input 
+                name="fisrtName" 
+                autoComplete="off" 
+                className='form-control' 
+                defaultValue={activeContact?.firstName}
+                required
+                />  
+
+                
                 <label className='form-label'>Last  Name </label>
-                <input className='form-control' placeholder={activeContact?.lastName} {...register('lastName' , {required:true }) }    />  
-                {
-                    errors.lastName?.type === 'required' 
-                    && <div> <small className="text-danger ">Last Name is required</small></div>
-                }  
+                <input 
+                name="lastName" 
+                autoComplete="off" 
+                className='form-control'  
+                defaultValue={activeContact?.lastName}      
+                required
+                />  
+                
                 <label className='form-label'>Phone  </label>
-                <input type="number" className='form-control' placeholder={activeContact?.phone} {...register('phone' , {required:true }) }    />  
-                {
-                    errors.phone?.type === 'required' 
-                    && <div> <small className="text-danger ">Phone is Required</small></div>
-                }  
+                <input 
+                name="phone" 
+                type="number" 
+                className='form-control'  
+                defaultValue={activeContact?.phone}     
+                required
+                />  
+                
                 <div className="d-grid gap-2">
               <button className="btn btn-primary block" >
                   Submit

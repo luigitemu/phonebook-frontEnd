@@ -112,8 +112,8 @@ export const startUpdatingContact = (contact , id) => {
         const resp = await fetchWithoutToken(`contacts/${id}` , contact , 'PUT');
         const body = await resp.json();
         if(resp.ok){
-            // console.log(body.contact );
-            dispatch(updateContact( contact ));
+            console.log(body.contact );
+            dispatch(updateContact( body.contact  ));
             Swal.fire({
                 icon: 'success',
                 position:'center',
