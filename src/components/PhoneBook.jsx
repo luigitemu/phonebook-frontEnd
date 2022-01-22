@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addContact, loadContacts } from "../actions/contacts";
+import {  startAddingContact,  startLoadingContacts } from "../actions/contacts";
 import { CustomInput } from "./CustomInput";
 
 
@@ -12,7 +12,7 @@ export const PhoneBook = () => {
     const dispatch = useDispatch();
      
     useEffect(() => {
-    dispatch(loadContacts());  
+    dispatch(startLoadingContacts( ))
     }, []);
     
 
@@ -21,7 +21,7 @@ export const PhoneBook = () => {
     
     
     const onSubmit = (data) => {
-        dispatch(addContact(data));
+        dispatch(startAddingContact(data));
         reset();
     }
 

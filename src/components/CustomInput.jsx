@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 
 
-export const CustomInput = ({ register , label , errors , errLabel , name , type="text" })=>{
+export const CustomInput = ({ register , label , errors , errLabel , name , type="text", defaultValue=""})=>{
 
     return (
         <>
             <label className="form-label">{label}</label>
-            <input className="form-control" type={type}   {...register(name, { required: true })} />
+            <input defaultValue={ defaultValue}  className="form-control" type={type}   {...register(name, { required: true })} />
                 {
                     errors.firstName?.type === 'required' 
                     &&  <small className="text-danger ">{errLabel}</small>

@@ -9,6 +9,11 @@ export const contactReducer = ( state= initialState , action )=>{
 
 
     switch (action.type) {
+        case types.contactsSetActive:
+            return {
+                ...state,
+                activeContact: {...action.payload} 
+            }
         case types.contactsLoad:
             return {
                 ...state,
@@ -23,7 +28,7 @@ export const contactReducer = ( state= initialState , action )=>{
             return {
                 ...state,
                 contacts: state.contacts.map( contact => 
-                        contact._id = action.payload._id
+                        contact._id === action.payload.id
                         ?action.payload
                         :contact 
                     )
