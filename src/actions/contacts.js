@@ -116,7 +116,7 @@ export const startUpdatingContact = (contact , id) => {
             Swal.fire({
                 icon: 'success',
                 position:'center',
-                title: 'Contact removed',
+                title: 'Contact updated',
                 showConfirmButton: false,
                 timer: 1500
               });
